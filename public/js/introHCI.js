@@ -16,12 +16,31 @@ function initializePage() {
  	initRSVPForm();
 }
 
-// init jQuery gestures  
+// init jQuery gestures
 function initGestures() {
 	// add gestures listener here
+  $(function(){		$(".judge-img").bind("taphold",tapholdHandler);
+   		function tapholdHandler(event){
+			var targetIDPrefix = event.target.id;
+
+			$("#"+targetIDPrefix+"-bio").show();
+      console.log("got prefix "+targetIDPrefix);
+		}
+	});
 }
 
 // init RSVP form submit listener
 function initRSVPForm() {
-  // add your code here
+  $('#rsvpForm').submit(function(e){
+	e.preventDefault();
+
+	var rsvpEmail = $('#rsvpEmail').val();
+  console.log("submitting form...");
+
+	$.post('addRSVP', { rsvpEmail: rsvpEmail}, postcallBack);});
+
+  function postcallBack(res){
+	  alert("RSVP sucessfully submitted!");
+	  $('#rsvpEmail').val('');
+  }
 }
